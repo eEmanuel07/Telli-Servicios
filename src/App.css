@@ -1,0 +1,11 @@
+.cards{
+    padding: 50px 20px;
+    background-color: #ffffff;
+}
+
+.container-cards{
+    display: flex;
+    justify-content: center; 
+    gap: 20px; 
+    flex-Wrap: wrap;
+}

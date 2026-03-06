@@ -1,0 +1,50 @@
+.card {
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    border-left:  10px solid;
+    padding: 20px;
+    text-align: center;
+    width: 25%;
+    transition: transform 0.3s;
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.5);
+}
+
+.icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #000000;
+    margin: 15px 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.card p {
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+.card button {
+    background: transparent;
+    border: 1px solid rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
+    padding: 8px 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 100px;
+}
+
+.card button:hover {
+    background: rgb(0, 0, 0);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 100%;
+        max-width: 350px; 
+    }
+}

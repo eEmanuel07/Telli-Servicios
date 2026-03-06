@@ -1,0 +1,90 @@
+.hero-container {
+    background-color: #000000;
+    min-height: 70vh; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+
+.titulo-blanco {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4.5rem;
+    font-weight: 900;
+    font-style: italic;
+    margin: 0;
+    line-height: 0.7;
+    text-transform: uppercase;
+}
+
+
+.titulo-naranja {
+    color: #ff5e00;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 5rem;
+    font-weight: 900;
+    font-style: italic;
+    margin: 0;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.subtitulo {
+    color: #bfbfbf;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+}
+
+.boton-contactar {
+    background-color: #ff6300;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px rgba(255, 94, 0, 0.4);
+    transition: transform 0.2s;
+}
+
+.boton-contactar:hover {
+    transform: scale(1.05);
+    background-color: #ff6300;
+}
+
+@media (max-width: 768px) {
+    .hero-container {
+        min-height: 50vh;
+        padding: 60px 20px;
+    }
+
+
+    .titulo-blanco {
+        font-size: 2.5rem;
+    }
+
+    .titulo-naranja {
+        font-size: 3rem;
+        line-height: 1;
+    }
+
+    .subtitulo {
+        font-size: 0.9rem;
+        padding: 0 10px; 
+    }
+    
+    .boton-contactar {
+        width: 100%;
+        max-width: 300px;
+    }
+}

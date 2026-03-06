@@ -1,0 +1,89 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem 2rem;
+    background-color: #000000;
+    color: white;
+    border-bottom: 1px solid #ff6300;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin: 1% 0%;
+}
+
+.logo img{
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.logo h2{
+    margin: auto;
+}
+.Telli {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    color: #ffffff;
+    margin-left: 8px; 
+    font-size: 1.8rem;
+}
+
+.Servicios {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    color: #ff6300;
+    margin-left: 8px;
+    font-size: 1.8rem;
+}
+
+.nav-links {
+    color: white;
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ff5e00;
+}
+
+.nav-links li {
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links li:hover {
+    color: #ff6300; 
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .nav-links {
+        flex-direction: column; 
+        width: 100%;
+        text-align: center;
+        gap: 20px; 
+        padding: 0;
+    }
+
+    .nav-links li {
+        width: 100%; 
+    }
+}
