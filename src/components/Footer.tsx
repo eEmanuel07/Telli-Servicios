@@ -29,11 +29,6 @@ function Footer() {
                             </a>
                         </li>
                         <li className="mb-[10px]">
-                            <a href="#presupuestos" className="text-[#e0e0e0] no-underline transition-all duration-300 hover:text-[#ff6300] hover:pl-[5px]">
-                                Presupuestos
-                            </a>
-                        </li>
-                        <li className="mb-[10px]">
                             <a href="#contacto" className="text-[#e0e0e0] no-underline transition-all duration-300 hover:text-[#ff6300] hover:pl-[5px]">
                                 Contacto
                             </a>

@@ -14,7 +14,7 @@ function App() {
 
       <section id='servicios' className='py-[50px] px-[20px] bg-white'>
 
-        <div className='flex justify-center gap-[20px] flex-wrap'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[25px] justify-items-center max-w-[1200px] mx-auto'>
           <ServiceCard
             icono="🔥"
             titulo="Gasista Matriculado"

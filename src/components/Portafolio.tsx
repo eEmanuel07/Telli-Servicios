@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface Trabajo {
     titulo: string;
@@ -11,12 +12,18 @@ const TarjetaTrabajo = ({ trabajo }: { trabajo: Trabajo }) => {
     const [fotoActual, setFotoActual] = useState(0);
     
     return (
-        <div className="w-[90%] md:w-[30%] m-[2%_1.5%] grid bg-[#1e1e1e] rounded-[15px] overflow-hidden transition-transform duration-300 border border-[#333] hover:-translate-y-[10px] hover:border-[#ff6300] group">
+        <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+            className="w-full grid bg-[#1e1e1e] rounded-[15px] overflow-hidden transition-transform duration-300 border border-[#333] hover:-translate-y-[10px] hover:border-[#ff6300] group">
             <div className="w-full">
                 <div className="w-[90%] aspect-square bg-black m-[5%] rounded-[15px] h-auto overflow-hidden">
                     <img
                         src={trabajo.imagenes[fotoActual]}
                         alt={trabajo.titulo}
+                        loading="lazy"
                         className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
                     />
                 </div>
@@ -28,6 +35,7 @@ const TarjetaTrabajo = ({ trabajo }: { trabajo: Trabajo }) => {
                                 key={index}
                                 src={img}
                                 alt={`Vista ${index}`}
+                                loading="lazy"
                                 onClick={() => setFotoActual(index)}
                                 className={`w-[50px] h-[50px] object-cover rounded-[4px] cursor-pointer transition-all duration-200 border-2 ${fotoActual === index
                                         ? "opacity-100 border-[#ff6300] scale-110"
@@ -52,7 +60,7 @@ const TarjetaTrabajo = ({ trabajo }: { trabajo: Trabajo }) => {
                     </h4>
                 )}
             </div>
-        </div>
+        </motion.div>
     );
 };
 
@@ -62,10 +70,10 @@ function Portfolio() {
             titulo: "Instalación de Cañerias de Agua Nueva",
             categoria: "Plomeria",
             imagenes: [
-                "public/Cañeria nueva de agua/foto1.jpeg",
-                "public/Cañeria nueva de agua/foto2.jpeg",
-                "public/Cañeria nueva de agua/foto3.jpeg",
-                "public/Cañeria nueva de agua/foto4.jpeg",
+                "public/Cañeria nueva de agua/foto1.webp",
+                "public/Cañeria nueva de agua/foto2.webp",
+                "public/Cañeria nueva de agua/foto3.webp",
+                "public/Cañeria nueva de agua/foto4.webp",
             ],
             detalles: "",
         },
@@ -73,13 +81,13 @@ function Portfolio() {
             titulo: "Cañeria Nueva Gas Fusion",
             categoria: "Plomería",
             imagenes: [
-                "public/Cañeria nueva de gas fusión/foto2.jpeg",
-                "public/Cañeria nueva de gas fusión/foto3.jpeg",
-                "public/Cañeria nueva de gas fusión/foto4.jpeg",
-                "public/Cañeria nueva de gas fusión/foto5.jpeg",
-                "public/Cañeria nueva de gas fusión/foto6.jpeg",
-                "public/Cañeria nueva de gas fusión/foto7.jpeg",
-                "public/Cañeria nueva de gas fusión/foto8.jpeg",
+                "public/Cañeria nueva de gas fusión/foto2.webp",
+                "public/Cañeria nueva de gas fusión/foto3.webp",
+                "public/Cañeria nueva de gas fusión/foto4.webp",
+                "public/Cañeria nueva de gas fusión/foto5.webp",
+                "public/Cañeria nueva de gas fusión/foto6.webp",
+                "public/Cañeria nueva de gas fusión/foto7.webp",
+                "public/Cañeria nueva de gas fusión/foto8.webp",
             ],
             detalles: "",
         },
@@ -87,10 +95,10 @@ function Portfolio() {
             titulo: "Instalación Nueva de Gabinete",
             categoria: "Gas",
             imagenes: [
-                "public/Instalacion gabinete nuevo/foto1.jpeg",
-                "public/Instalacion gabinete nuevo/foto2.jpeg",
-                "public/Instalacion gabinete nuevo/foto3.jpeg",
-                "public/Instalacion gabinete nuevo/foto4.jpeg",
+                "public/Instalacion gabinete nuevo/foto1.webp",
+                "public/Instalacion gabinete nuevo/foto2.webp",
+                "public/Instalacion gabinete nuevo/foto3.webp",
+                "public/Instalacion gabinete nuevo/foto4.webp",
             ],
             detalles: "",
         },
@@ -98,8 +106,8 @@ function Portfolio() {
             titulo: "Instalación de Hornos Industriales",
             categoria: "Gas",
             imagenes: [
-                "public/Instalacion hornos industriales/foto1.jpeg",
-                "public/Instalacion hornos industriales/foto2.jpeg",
+                "public/Instalacion hornos industriales/foto1.webp",
+                "public/Instalacion hornos industriales/foto2.webp",
             ],
             detalles: "",
         },
@@ -107,11 +115,11 @@ function Portfolio() {
             titulo: "Instalación de Cañeria de Gas Epoxi",
             categoria: "Gas",
             imagenes: [
-                "public/instalacón cañeria epoxi/foto1.jpeg",
-                "public/instalacón cañeria epoxi/foto2.jpeg",
-                "public/instalacón cañeria epoxi/foto3.jpeg",
-                "public/instalacón cañeria epoxi/foto4.jpeg",
-                "public/instalacón cañeria epoxi/foto5.jpeg",
+                "public/instalacón cañeria epoxi/foto1.webp",
+                "public/instalacón cañeria epoxi/foto2.webp",
+                "public/instalacón cañeria epoxi/foto3.webp",
+                "public/instalacón cañeria epoxi/foto4.webp",
+                "public/instalacón cañeria epoxi/foto5.webp",
             ],
             detalles: "",
         },
@@ -119,8 +127,8 @@ function Portfolio() {
             titulo: "Planos de Istalación de Gas",
             categoria: "Gas",
             imagenes: [
-                "public/Planos/Marcelo Sabatini_page-0001.jpg",
-                "public/Planos/Walter rodeo del medio_page-0001.jpg",
+                "public/Planos/Marcelo Sabatini_page-0001.webp",
+                "public/Planos/Walter rodeo del medio_page-0001.webp",
             ],
             detalles: "",
         },
@@ -134,7 +142,7 @@ function Portfolio() {
             <h4 className="text-[#ff6300] font-['Montserrat',_sans-serif] font-extrabold text-[2.5rem] mt-0 mb-[50px]">
                 TRABAJOS DE MUESTRA
             </h4>
-            <div className="w-full flex flex-wrap justify-center md:justify-start">
+            <div className="w-full max-w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] px-[20px]">
                 {misTrabajos.map((trabajo, index) => (
                     <TarjetaTrabajo key={index} trabajo={trabajo} />
                 ))}
