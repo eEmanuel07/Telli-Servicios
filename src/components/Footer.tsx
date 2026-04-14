@@ -49,10 +49,6 @@ function Footer() {
                             <span className="text-[1.2rem]">📞</span>
                             +54 9 261 639-1313
                         </li>
-                        <li className="flex items-center justify-center md:justify-start gap-[10px] mb-[15px] text-[#e0e0e0]">
-                            <span className="text-[1.2rem]">✉️</span>
-                            contacto@telliservicios.com
-                        </li>
                     </ul>
                 </div>
 
