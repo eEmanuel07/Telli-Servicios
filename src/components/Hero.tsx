@@ -2,6 +2,16 @@ import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 
 function Hero() {
+  const handleWhatsAppClick = () => {
+    // @ts-ignore
+    if (typeof window !== 'undefined' && window.gtag) {
+      // @ts-ignore
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-18107033436/WV6SCJjb0qEcENzOjbpD'
+      });
+    }
+  };
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -72,6 +82,7 @@ function Hero() {
                 animate={["visible", "pulse"]}
                 whileHover="hover"
                 onClick={() => {
+                  handleWhatsAppClick();
                   const telefono = "5492616391313";
                   const mensaje = "Hola Telli Servicios, vengo desde su sitio web y necesito contactarlos.";
                   const linkWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
