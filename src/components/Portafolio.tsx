@@ -1,4 +1,4 @@
-import { useState, MouseEvent, TouchEvent } from "react";
+import { useState, type MouseEvent, type TouchEvent } from "react";
 import { motion } from "framer-motion";
 
 interface Trabajo {
