@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 
 interface ServiceCardProps {
     titulo: string;
@@ -6,6 +7,9 @@ interface ServiceCardProps {
     icono: string;
     color?: string;
     margin?: string;
+    historia?: string;
+    trabajos?: string;
+    consejos?: string;
 }
 
 function ServiceCard({
@@ -14,7 +18,12 @@ function ServiceCard({
     icono,
     color = "#000000",
     margin = "20px",
+    historia,
+    trabajos,
+    consejos
 }: ServiceCardProps) {
+    const [isExpanded, setIsExpanded] = useState(false);
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -29,11 +38,62 @@ function ServiceCard({
                 <span className="text-[1.5rem] mb-[10px] mt-[10px]">{icono}</span>
             </h3>
 
-            <p className="w-full text-[1rem]" style={{ marginBottom: margin }}>
-                {descripcion}
-            </p>
+            <div className="w-full text-[1rem]" style={{ marginBottom: margin }}>
+                <AnimatePresence mode="wait">
+                    {!isExpanded ? (
+                        <motion.p
+                            key="descripcion"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="m-0"
+                        >
+                            {descripcion}
+                        </motion.p>
+                    ) : (
+                        <motion.div
+                            key="detalles"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="flex flex-col gap-[15px] text-left mt-[10px] overflow-hidden"
+                        >
+                            {historia && (
+                                <div>
+                                    <h4 className="font-bold text-[1.1rem] m-0 mb-[5px]" style={{ color }}>Historia</h4>
+                                    <p className="text-[0.95rem] text-gray-700 m-0 whitespace-pre-line">{historia}</p>
+                                </div>
+                            )}
+                            {trabajos && (
+                                <div>
+                                    <h4 className="font-bold text-[1.1rem] m-0 mb-[5px]" style={{ color }}>Trabajos</h4>
+                                    <p className="text-[0.95rem] text-gray-700 m-0 whitespace-pre-line">{trabajos}</p>
+                                </div>
+                            )}
+                            {consejos && (
+                                <div 
+                                    className="mt-[5px] p-[12px] rounded-[8px] border-l-[4px] bg-[#f8f9fa]" 
+                                    style={{ borderLeftColor: color }}
+                                >
+                                    <h4 className="font-bold text-[1.1rem] m-0 mb-[5px] flex items-center gap-[6px]" style={{ color }}>
+                                        💡 Consejo
+                                    </h4>
+                                    <p className="text-[0.95rem] text-gray-800 m-0 whitespace-pre-line italic font-medium">{consejos}</p>
+                                </div>
+                            )}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
 
-            <a className="bg-transparent border border-black text-black py-[8px] px-[16px] mt-[10px] cursor-pointer rounded-[100px] transition-colors duration-300 hover:bg-black hover:text-white no-underline text-inherit cursor-pointer"> Saber mas →</a>
+            <button 
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="bg-transparent border border-black text-black py-[8px] px-[16px] mt-auto cursor-pointer rounded-[100px] transition-colors duration-300 hover:bg-black hover:text-white font-semibold"
+            >
+                {isExpanded ? "Ver menos" : "Ver más"}
+            </button>
         </motion.div>
     );
 }
