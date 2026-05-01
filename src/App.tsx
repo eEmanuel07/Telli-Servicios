@@ -5,6 +5,7 @@ import About from './components/About'
 import Portafolio from './components/Portafolio'
 import Footer from './components/Footer'
 import WhatsAppBtn from './components/BtnWa'
+import { Analytics } from '@vercel/analytics/react'
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
       <Portafolio />
       <Footer />
       <WhatsAppBtn />
+      <Analytics />
     </div>
   )
 }
