@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, MouseEvent, TouchEvent } from "react";
 import { motion } from "framer-motion";
 
 interface Trabajo {
@@ -10,7 +10,44 @@ interface Trabajo {
 
 const TarjetaTrabajo = ({ trabajo }: { trabajo: Trabajo }) => {
     const [fotoActual, setFotoActual] = useState(0);
-    
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e: TouchEvent) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEndEvent = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        if (isLeftSwipe) {
+            setFotoActual((prev) => (prev === trabajo.imagenes.length - 1 ? 0 : prev + 1));
+        }
+        if (isRightSwipe) {
+            setFotoActual((prev) => (prev === 0 ? trabajo.imagenes.length - 1 : prev - 1));
+        }
+    };
+
+    const nextImage = (e: MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        setFotoActual((prev) => (prev === trabajo.imagenes.length - 1 ? 0 : prev + 1));
+    };
+
+    const prevImage = (e: MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        setFotoActual((prev) => (prev === 0 ? trabajo.imagenes.length - 1 : prev - 1));
+    };
+
     return (
         <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
@@ -19,13 +56,37 @@ const TarjetaTrabajo = ({ trabajo }: { trabajo: Trabajo }) => {
             transition={{ duration: 0.5 }}
             className="w-full grid bg-[#1e1e1e] rounded-[15px] overflow-hidden transition-transform duration-300 border border-[#333] hover:-translate-y-[10px] hover:border-[#ff6300] group">
             <div className="w-full">
-                <div className="w-[90%] aspect-square bg-black m-[5%] rounded-[15px] h-auto overflow-hidden">
+                <div 
+                    className="w-[90%] aspect-square bg-black m-[5%] rounded-[15px] h-auto overflow-hidden relative group/img touch-pan-y"
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEndEvent}
+                >
                     <img
                         src={trabajo.imagenes[fotoActual]}
                         alt={trabajo.titulo}
                         loading="lazy"
-                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110 select-none pointer-events-none"
                     />
+
+                    {trabajo.imagenes.length > 1 && (
+                        <>
+                            <button 
+                                onClick={prevImage}
+                                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 hover:bg-[#ff6300] z-10"
+                                aria-label="Imagen anterior"
+                            >
+                                &#10094;
+                            </button>
+                            <button 
+                                onClick={nextImage}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 hover:bg-[#ff6300] z-10"
+                                aria-label="Siguiente imagen"
+                            >
+                                &#10095;
+                            </button>
+                        </>
+                    )}
                 </div>
 
                 {trabajo.imagenes.length > 1 && (
