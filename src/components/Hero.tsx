@@ -83,7 +83,7 @@ function Hero() {
                 whileHover="hover"
                 onClick={() => {
                   handleWhatsAppClick();
-                  const telefono = "5492616391313";
+                  const telefono = "5492616682376";
                   const mensaje = "Hola Telli Servicios, vengo desde su sitio web y necesito contactarlos.";
                   const linkWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
                   window.open(linkWhatsApp, '_blank');

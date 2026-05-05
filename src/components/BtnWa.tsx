@@ -9,7 +9,7 @@ function WhatsAppBtn() {
       }
     };
 
-    const telefono = "5492616391313"; 
+    const telefono = "5492616682376"; 
     const mensaje = "Hola Telli Servicios, necesito un presupuesto.";
 
     const linkWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
