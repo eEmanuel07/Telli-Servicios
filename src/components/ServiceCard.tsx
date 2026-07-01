@@ -17,7 +17,7 @@ function ServiceCard({
     descripcion,
     icono,
     color = "#000000",
-    margin = "20px",
+    margin = "15px",
     historia,
     trabajos,
     consejos
@@ -34,17 +34,17 @@ function ServiceCard({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
-            className={`bg-white text-black flex flex-col justify-between border-l-[10px] border-solid p-[20px] text-center w-full max-w-[350px] transition-transform duration-300 shadow-[10px_10px_20px_rgba(0,0,0,0.5)] hover:scale-105 ${
-                isExpanded ? "h-auto" : "min-h-[260px]"
+            className={`bg-white text-black flex flex-col justify-between border-l-[10px] border-solid px-[14px] py-[20px] text-center w-full max-w-[350px] transition-transform duration-300 shadow-[10px_10px_20px_rgba(0,0,0,0.5)] hover:scale-105 ${
+                isExpanded ? "h-auto" : "min-h-[240px]"
             }`}
             style={borderStyle}
         >
-            <h3 className="text-[1.3rem] font-black text-black my-[15px] font-['Montserrat',_sans-serif] flex flex-row gap-2 items-center justify-center">
+            <h3 className="text-[1.15rem] font-black text-black my-[10px] font-['Montserrat',_sans-serif] flex flex-row gap-2 items-center justify-center">
                 <span>{titulo}</span>
-                <span className="text-[1.5rem] mb-[10px] mt-[10px]">{icono}</span>
+                <span className="text-[1.3rem] mb-0 mt-0">{icono}</span>
             </h3>
 
-            <div className="w-full text-[1rem]" style={{ marginBottom: margin }}>
+            <div className="w-full text-[0.925rem]" style={{ marginBottom: margin }}>
                 <AnimatePresence mode="wait">
                     {!isExpanded ? (
                         <motion.p
