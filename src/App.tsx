@@ -15,7 +15,7 @@ function App() {
 
       <section id='servicios' className='py-[50px] px-[20px] bg-white'>
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[25px] justify-items-center items-start max-w-[1200px] mx-auto'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[25px] justify-items-center items-start max-w-[1250px] mx-auto'>
           <ServiceCard
             icono="🔥"
             titulo="Gasista Matriculado"
@@ -43,7 +43,18 @@ function App() {
                       ✅ Sanitario completos"
             consejos="Recordá: el mantenimiento de tu hogar comienza desde la llave general de agua."
           />
-
+          <ServiceCard
+            icono="🌡️"
+            titulo="Climatización"
+            descripcion="Instalación, mantenimiento y reparación de sistemas de calefacción central y aire acondicionado."
+            color="linear-gradient(to bottom, #3b82f6, #f97316)"
+            trabajos="✅ Calefacción: Calderas, piso radiante y radiadores.
+                      ✅ Refrigeración: Instalación técnica de equipos Split.
+                      ✅ Mantenimiento: Pruebas de hermeticidad, carga de gas y desobstrucción.
+                      ✅ Optimización: Balance térmico y eficiencia energética.
+                      ✅ Reparaciones: Detección de fugas y soluciones eléctricas."
+            consejos="Realiza mantenimientos preventivos antes de cada temporada. Esto asegura que tus equipos funcionen correctamente, consuman menos energía y duren muchos más años."
+          />
           <ServiceCard
             icono="🛠️"
             titulo="Mantenimiento"

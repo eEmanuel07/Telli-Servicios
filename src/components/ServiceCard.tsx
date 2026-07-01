@@ -24,14 +24,20 @@ function ServiceCard({
 }: ServiceCardProps) {
     const [isExpanded, setIsExpanded] = useState(false);
 
+    const isGradient = color.startsWith('linear-gradient');
+    const borderStyle = isGradient ? { borderImage: `${color} 1` } : { borderLeftColor: color };
+    const highlightColor = isGradient ? '#8b5cf6' : color;
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
-            className="bg-white text-black flex flex-col justify-between border-l-[10px] border-solid p-[20px] text-center w-full max-w-[350px] transition-transform duration-300 shadow-[10px_10px_20px_rgba(0,0,0,0.5)] hover:scale-105"
-            style={{ borderLeftColor: color }}
+            className={`bg-white text-black flex flex-col justify-between border-l-[10px] border-solid p-[20px] text-center w-full max-w-[350px] transition-transform duration-300 shadow-[10px_10px_20px_rgba(0,0,0,0.5)] hover:scale-105 ${
+                isExpanded ? "h-auto" : "min-h-[260px]"
+            }`}
+            style={borderStyle}
         >
             <h3 className="text-[1.3rem] font-black text-black my-[15px] font-['Montserrat',_sans-serif] flex flex-row gap-2 items-center justify-center">
                 <span>{titulo}</span>
@@ -62,22 +68,22 @@ function ServiceCard({
                         >
                             {historia && (
                                 <div>
-                                    <h4 className="font-bold text-[1.1rem] m-0 mb-[5px]" style={{ color }}>Historia</h4>
+                                    <h4 className="font-bold text-[1.1rem] m-0 mb-[5px]" style={{ color: highlightColor }}>Historia</h4>
                                     <p className="text-[0.95rem] text-gray-700 m-0 whitespace-pre-line">{historia}</p>
                                 </div>
                             )}
                             {trabajos && (
                                 <div>
-                                    <h4 className="font-bold text-[1.1rem] m-0 mb-[5px]" style={{ color }}>Trabajos</h4>
+                                    <h4 className="font-bold text-[1.1rem] m-0 mb-[5px]" style={{ color: highlightColor }}>Trabajos</h4>
                                     <p className="text-[0.95rem] text-gray-700 m-0 whitespace-pre-line">{trabajos}</p>
                                 </div>
                             )}
                             {consejos && (
                                 <div 
                                     className="mt-[5px] p-[12px] rounded-[8px] border-l-[4px] bg-[#f8f9fa]" 
-                                    style={{ borderLeftColor: color }}
+                                    style={{ borderLeftColor: highlightColor }}
                                 >
-                                    <h4 className="font-bold text-[1.1rem] m-0 mb-[5px] flex items-center gap-[6px]" style={{ color }}>
+                                    <h4 className="font-bold text-[1.1rem] m-0 mb-[5px] flex items-center gap-[6px]" style={{ color: highlightColor }}>
                                         💡 Consejo
                                     </h4>
                                     <p className="text-[0.95rem] text-gray-800 m-0 whitespace-pre-line italic font-medium">{consejos}</p>

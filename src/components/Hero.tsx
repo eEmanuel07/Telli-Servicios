@@ -73,7 +73,7 @@ function Hero() {
                 variants={itemVariants}
                 className="text-[#bfbfbf] text-[0.9rem] md:text-[1.5rem] font-semibold uppercase tracking-[2px] mb-[40px] mt-[10px] px-[10px] md:px-0"
             >
-                GAS • PLOMERÍA • MANTENIMIENTO
+                GAS • PLOMERÍA • CLIMATIZACIÓN • MANTENIMIENTO
             </motion.p>
             
             <motion.button 
