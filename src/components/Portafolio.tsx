@@ -176,9 +176,6 @@ function Portfolio() {
     const [activeImgIndex, setActiveImgIndex] = useState(0);
     const [isLoadingHD, setIsLoadingHD] = useState(true);
 
-    const [modalTouchStart, setModalTouchStart] = useState<number | null>(null);
-    const [modalTouchEnd, setModalTouchEnd] = useState<number | null>(null);
-
     const transformRef = useRef<any>(null);
 
     const abrirModal = (trabajo: Trabajo, index: number) => {
@@ -189,42 +186,6 @@ function Portfolio() {
 
     const cerrarModal = () => {
         setSelectedTrabajo(null);
-    };
-
-    const handlePrev = () => {
-        if (!selectedTrabajo) return;
-        setIsLoadingHD(true);
-        setActiveImgIndex((prev) => (prev === 0 ? selectedTrabajo.imagenes.length - 1 : prev - 1));
-    };
-
-    const handleNext = () => {
-        if (!selectedTrabajo) return;
-        setIsLoadingHD(true);
-        setActiveImgIndex((prev) => (prev === selectedTrabajo.imagenes.length - 1 ? 0 : prev + 1));
-    };
-
-    const handleModalTouchStart = (e: TouchEvent) => {
-        setModalTouchEnd(null);
-        setModalTouchStart(e.targetTouches[0].clientX);
-    };
-
-    const handleModalTouchMove = (e: TouchEvent) => {
-        setModalTouchEnd(e.targetTouches[0].clientX);
-    };
-
-    const handleModalTouchEnd = () => {
-        const scale = transformRef.current?.instance.transformState.scale || 1;
-        if (scale > 1) return; // Ignorar deslizamientos para cambiar de foto si hay zoom aplicado
-        if (!modalTouchStart || !modalTouchEnd) return;
-        
-        const distance = modalTouchStart - modalTouchEnd;
-        const minSwipe = 50;
-        
-        if (distance > minSwipe) {
-            handleNext();
-        } else if (distance < -minSwipe) {
-            handlePrev();
-        }
     };
 
     // Bloquear scroll de fondo cuando el modal esté abierto
@@ -239,23 +200,19 @@ function Portfolio() {
         };
     }, [selectedTrabajo]);
 
-    // Listener de teclado para accesibilidad (ESC, Flechas)
+    // Listener de teclado para accesibilidad (ESC)
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (!selectedTrabajo) return;
             if (e.key === "Escape") {
                 cerrarModal();
-            } else if (e.key === "ArrowLeft") {
-                handlePrev();
-            } else if (e.key === "ArrowRight") {
-                handleNext();
             }
         };
         window.addEventListener("keydown", handleKeyDown);
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [selectedTrabajo, activeImgIndex]);
+    }, [selectedTrabajo]);
 
     const misTrabajos: Trabajo[] = [
         {
@@ -348,7 +305,7 @@ function Portfolio() {
                 ))}
             </div>
 
-            {/* Modal de Lightbox con Zoom */}
+            {/* Modal de Lightbox con Zoom Minimalista */}
             <AnimatePresence>
                 {selectedTrabajo && (
                     <motion.div
@@ -357,46 +314,25 @@ function Portfolio() {
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
                         onClick={cerrarModal}
-                        className="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex flex-col justify-between items-center py-4 px-3 select-none"
+                        className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 select-none"
                     >
-                        {/* Header: Título y Botón Cerrar */}
+                        {/* Botón de cierre absoluto */}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                cerrarModal();
+                            }}
+                            className="absolute top-4 right-6 text-white/80 hover:text-[#ff6300] text-4xl font-bold p-2 cursor-pointer transition-colors duration-200 z-50 leading-none"
+                            aria-label="Cerrar modal"
+                        >
+                            &times;
+                        </button>
+
+                        {/* Contenedor Principal del Zoom */}
                         <div 
-                            className="w-full max-w-[1200px] flex justify-between items-start text-white z-10 gap-4"
+                            className="relative w-full max-w-[900px] h-[80vh] md:h-[85vh] flex items-center justify-center min-h-0"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="min-w-0 flex-1">
-                                <span className="text-[#ff6300] font-bold text-xs md:text-sm uppercase font-['Montserrat',_sans-serif]">
-                                    {selectedTrabajo.categoria}
-                                </span>
-                                <h3 className="text-base md:text-xl font-bold font-['Montserrat',_sans-serif] mt-0.5 leading-snug">
-                                    {selectedTrabajo.titulo}
-                                </h3>
-                            </div>
-                            <button
-                                onClick={cerrarModal}
-                                className="text-white/80 hover:text-[#ff6300] text-3xl md:text-4xl font-bold p-1 cursor-pointer transition-colors duration-200 leading-none shrink-0"
-                                aria-label="Cerrar modal"
-                            >
-                                &times;
-                            </button>
-                        </div>
-
-                        {/* Contenedor Principal del Zoom (Responsive Flexbox) */}
-                        <div 
-                            className="relative flex-1 w-full max-w-[900px] flex items-center justify-center min-h-0 my-3"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            {/* Flecha Izquierda */}
-                            {selectedTrabajo.imagenes.length > 1 && (
-                                <button
-                                    onClick={handlePrev}
-                                    className="absolute left-2 md:-left-16 bg-black/60 hover:bg-[#ff6300] text-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-110 z-20 shadow-lg border border-white/10"
-                                    aria-label="Imagen anterior"
-                                >
-                                    &#10094;
-                                </button>
-                            )}
-
                             {/* Componente de Zoom de react-zoom-pan-pinch */}
                             <TransformWrapper
                                 ref={transformRef}
@@ -405,112 +341,46 @@ function Portfolio() {
                                 maxScale={5}
                                 centerOnInit
                             >
-                                {({ zoomIn, zoomOut, resetTransform }) => {
+                                {({ resetTransform }) => {
                                     // Restablecer el zoom cada vez que se cambia de imagen
                                     useEffect(() => {
                                         resetTransform();
                                     }, [activeImgIndex]);
 
                                     return (
-                                        <>
-                                            {/* Controles flotantes */}
-                                            <div className="absolute right-4 bottom-4 flex gap-2 z-20 bg-black/55 p-1.5 rounded-xl backdrop-blur-sm border border-white/10">
-                                                <button
-                                                    onClick={() => zoomIn()}
-                                                    className="bg-[#2a2a2a] hover:bg-[#ff6300] text-white w-9 h-9 rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-200 font-bold"
-                                                    title="Acercar"
-                                                >
-                                                    +
-                                                </button>
-                                                <button
-                                                    onClick={() => zoomOut()}
-                                                    className="bg-[#2a2a2a] hover:bg-[#ff6300] text-white w-9 h-9 rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-200 font-bold"
-                                                    title="Alejar"
-                                                >
-                                                    -
-                                                </button>
-                                                <button
-                                                    onClick={() => resetTransform()}
-                                                    className="bg-[#2a2a2a] hover:bg-[#ff6300] text-white px-3 h-9 rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-200 text-xs font-semibold"
-                                                    title="Restablecer"
-                                                >
-                                                    Reset
-                                                </button>
+                                        <TransformComponent
+                                            wrapperClass="!w-full !h-full rounded-2xl overflow-hidden cursor-grab active:cursor-grabbing"
+                                            contentClass="!w-full !h-full flex items-center justify-center"
+                                        >
+                                            <div className="relative w-full h-full flex items-center justify-center pointer-events-auto">
+                                                {/* Blur placeholder en el fondo (carga progresiva) */}
+                                                <img
+                                                    src={getThumbUrl(selectedTrabajo.imagenes[activeImgIndex])}
+                                                    alt="Placeholder"
+                                                    className="absolute max-w-full max-h-full object-contain filter blur-md opacity-30 select-none pointer-events-none"
+                                                />
+
+                                                {/* Imagen Principal en alta resolución */}
+                                                <img
+                                                    src={getFullUrl(selectedTrabajo.imagenes[activeImgIndex])}
+                                                    alt={selectedTrabajo.titulo}
+                                                    onLoad={() => setIsLoadingHD(false)}
+                                                    className={`max-w-full max-h-full object-contain select-none transition-opacity duration-300 ${
+                                                        isLoadingHD ? "opacity-0" : "opacity-100"
+                                                    }`}
+                                                />
+
+                                                {/* Spinner mientras descarga el original */}
+                                                {isLoadingHD && (
+                                                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
+                                                        <div className="w-12 h-12 border-4 border-t-[#ff6300] border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                                                    </div>
+                                                )}
                                             </div>
-
-                                            <TransformComponent
-                                                wrapperClass="!w-full !h-full rounded-2xl overflow-hidden cursor-grab active:cursor-grabbing"
-                                                contentClass="!w-full !h-full flex items-center justify-center"
-                                            >
-                                                <div 
-                                                    className="relative w-full h-full flex items-center justify-center pointer-events-auto"
-                                                    onTouchStart={handleModalTouchStart}
-                                                    onTouchMove={handleModalTouchMove}
-                                                    onTouchEnd={handleModalTouchEnd}
-                                                >
-                                                    {/* Blur placeholder en el fondo (carga progresiva) */}
-                                                    <img
-                                                        src={getThumbUrl(selectedTrabajo.imagenes[activeImgIndex])}
-                                                        alt="Placeholder"
-                                                        className="absolute max-w-full max-h-full object-contain filter blur-md opacity-30 select-none pointer-events-none"
-                                                    />
-
-                                                    {/* Imagen Principal en alta resolución */}
-                                                    <img
-                                                        src={getFullUrl(selectedTrabajo.imagenes[activeImgIndex])}
-                                                        alt={selectedTrabajo.titulo}
-                                                        onLoad={() => setIsLoadingHD(false)}
-                                                        className={`max-w-full max-h-full object-contain select-none transition-opacity duration-300 ${
-                                                            isLoadingHD ? "opacity-0" : "opacity-100"
-                                                        }`}
-                                                    />
-
-                                                    {/* Spinner mientras descarga el original */}
-                                                    {isLoadingHD && (
-                                                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
-                                                            <div className="w-12 h-12 border-4 border-t-[#ff6300] border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </TransformComponent>
-                                        </>
+                                        </TransformComponent>
                                     );
                                 }}
                             </TransformWrapper>
-
-                            {/* Flecha Derecha */}
-                            {selectedTrabajo.imagenes.length > 1 && (
-                                <button
-                                    onClick={handleNext}
-                                    className="absolute right-2 md:-right-16 bg-black/60 hover:bg-[#ff6300] text-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-110 z-20 shadow-lg border border-white/10"
-                                    aria-label="Siguiente imagen"
-                                >
-                                    &#10095;
-                                </button>
-                            )}
-                        </div>
-
-                        {/* Tiras de Miniaturas en el pie del Modal */}
-                        <div 
-                            className="w-full max-w-[600px] flex justify-center gap-1.5 overflow-x-auto py-1 z-10 scrollbar-none shrink-0"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            {selectedTrabajo.imagenes.map((img, idx) => (
-                                <img
-                                    key={idx}
-                                    src={getThumbUrl(img)}
-                                    alt={`Miniatura ${idx}`}
-                                    onClick={() => {
-                                        setIsLoadingHD(true);
-                                        setActiveImgIndex(idx);
-                                    }}
-                                    className={`w-10 h-10 md:w-12 md:h-12 object-cover rounded-lg cursor-pointer transition-all duration-200 border-2 ${
-                                        activeImgIndex === idx
-                                            ? "border-[#ff6300] scale-105 opacity-100"
-                                            : "border-transparent opacity-60 hover:opacity-100"
-                                    }`}
-                                />
-                            ))}
                         </div>
                     </motion.div>
                 )}
