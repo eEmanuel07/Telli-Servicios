@@ -285,6 +285,37 @@ function Portfolio() {
             ],
             detalles: "",
         },
+        {
+            titulo: "Instalación y Mantenimiento de Aire Acondicionado",
+            categoria: "Climatización",
+            imagenes: [
+                "/Aire acondicionado/01.webp",
+                "/Aire acondicionado/02.webp",
+                "/Aire acondicionado/03.webp",
+                "/Aire acondicionado/04.webp",
+                "/Aire acondicionado/05.webp",
+                "/Aire acondicionado/06.webp",
+                "/Aire acondicionado/07.webp",
+            ],
+            detalles: "Instalación de equipos Split, carga de refrigerante y mantenimiento preventivo/correctivo.",
+        },
+        {
+            titulo: "Sistemas de Calefacción y Radiadores",
+            categoria: "Climatización",
+            imagenes: [
+                "/Radiadores/01.webp",
+                "/Radiadores/02.webp",
+                "/Radiadores/03.webp",
+                "/Radiadores/04.webp",
+                "/Radiadores/05.webp",
+                "/Radiadores/06.webp",
+                "/Radiadores/07.webp",
+                "/Radiadores/08.webp",
+                "/Radiadores/09.webp",
+                "/Radiadores/10.webp",
+            ],
+            detalles: "Instalación de calderas, radiadores y tendido de cañerías para calefacción central.",
+        },
     ];
 
     return (
@@ -292,7 +323,7 @@ function Portfolio() {
             id="proyectos"
             className="w-full py-[40px] bg-[#121212] text-center"
         >
-            <h4 className="text-[#ff6300] font-['Montserrat',_sans-serif] font-extrabold text-[2.5rem] mt-0 mb-[50px]">
+            <h4 className="text-[#ff6300] font-['Montserrat',_sans-serif] font-extrabold text-[1.8rem] sm:text-[2.5rem] mt-0 mb-[30px] sm:mb-[50px] px-4 leading-tight">
                 TRABAJOS DE MUESTRA
             </h4>
             <div className="w-full max-w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] px-[20px]">
